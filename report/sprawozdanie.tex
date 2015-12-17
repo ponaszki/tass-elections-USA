@@ -14,11 +14,12 @@
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{hyperref}
+\usepackage{url}
 
 
 
 \author{Onaszkiewicz Przemysław, Gadawski Łukasz}
-\title{Temat 2\\: Dla wskazanego kandydata w wyborach w USA, przedstaw w sposób czytelny na mapie finansowanie jego kampanii wyborczej, z uwzględnieniem darowizn bezpośrednich i poprzez komitety wyborcze. 
+\title{Temat 2\\ Dla wskazanego kandydata w wyborach w USA, przedstaw w sposób czytelny na mapie finansowanie jego kampanii wyborczej, z uwzględnieniem darowizn bezpośrednich i poprzez komitety wyborcze. 
 }
 
 \begin{document}
@@ -52,30 +53,22 @@ Do pobrania danych dotyczących wyborów zdecydowaliśmy się na wykorzystanie A
 Sposoby uzyskania przykładowych danych są przedstawione poniżej. 
 Rozpatrywano dwa sposoby pobierania danych. Pierwszym z nich było korzystanie z API wystawionego przez NYTimes  do pobierania danych w formacie json. Kolejnym było pobranie na dysk plików z danymi dotyczącymi wyborów bezpośrednio na dysk twardy i przechowywanie ich w bazie danych.
 \subsection{New York Times API- pobieranie potrzebnych fragmentów danych w formacie json}
-\url{http://developer.nytimes.com/docs/campaign_finance_api/campaign_finance_api_examples#pres-state-zip-json}
+\textbf{Indywidualne wpłaty na danego kandydata:}
 
-Powyższe zapytanie pozwala na pobranie danych o indywidualnych darczyńcach. Z uwsględnieniem ich miejsca zamieszkania. Filtrując dane można uzyskać dane o wysokości darowizn od darczyńców indywidualnych  z danego regionu geograficznego,  jak również o ilości wpłat na danego kandydata w danym regionie.
+Zapytanie \cite{derekwillis2015ind} pozwala na pobranie danych o indywidualnych darczyńcach. Z uwzględnieniem ich miejsca zamieszkania. Filtrując dane można uzyskać dane o wysokości darowizn od darczyńców indywidualnych  z danego regionu geograficznego,  jak również o ilości wpłat na danego kandydata w danym regionie.
+\\
+\\
+\textbf{Finansowanie kandydata przez komitet z danego dystryktu stanu:}
 
-indywidualne wpłaty na danego kandydata:
-
-
-finansowanie kandydata przez komitet z danego dystryktu stanu:
-\url{http://developer.nytimes.com/docs/campaign_finance_api/campaign_finance_api_examples#committee-contributions-to-candidate-json}
-
-Powyższe zapytanie pozwala uzyskać wysokość wpłat przekazanych na rzecz danego kandydata w danym dystrykcie wyborczym. Pozwala to uzyskać dane o wysokości wpłat komitetów na rzecz kandydata(i ich procentowego udziału w totalnej kwocie zebranej przez niego ).
+Zapytanie \cite{derekwillis2015com} pozwala uzyskać wysokość wpłat przekazanych na rzecz danego kandydata w danym dystrykcie wyborczym. Pozwala to uzyskać dane o wysokości wpłat komitetów na rzecz kandydata(i ich procentowego udziału w totalnej kwocie zebranej przez niego ).
 
 \subsection{Pobranie plików zawierających dane o finansach bezpośrednio ze stron FEC}
 
-Drugim rozpatrywanym sposobem uzyskania danych na temat finansowania kampanii kandydatów w wyborach prezydanckich jest pobieranie danych do kampanii bezpośrednio ze stron FEC i załadowanie ich do bazy danych.
+Drugim rozpatrywanym sposobem uzyskania danych na temat finansowania kampanii kandydatów w wyborach prezydenckich jest pobieranie danych do kampanii bezpośrednio ze stron FEC i załadowanie ich do bazy danych.
 Poniżej przedstawiono opis zawartości poszczególnych plików w celu przedstawienia jakie dane można za ich pomocą uzyskać.
 
-
-
 \begin{itemize}
-\item Plik zawierający dane na temat wpływów do kandydatów od komitetów.
-
-\url{http://www.fec.gov/finance/disclosure/metadata/DataDictionaryContributionstoCandidates.shtml}
-
+\item Plik zawierający dane na temat wpływów do kandydatów od komitetów. \cite{fecContToCandFromComit}
 \begin{itemize}
 \item Candidate Identification Number
 \item Filer Identification Number (CMTE\_ID)
@@ -97,8 +90,7 @@ Poniżej przedstawiono opis zawartości poszczególnych plików w celu przedstaw
 \end{itemize}
 
 \item Plik zawierający dane na temat wpływów do komitetów z indywidualnych dotacji.
-
-\url{http://www.fec.gov/finance/disclosure/metadata/DataDictionaryContributionsbyIndividuals.shtml}
+\cite{fecIndividualContributionMasterFileDescriptionSite2015}
 
 \begin{itemize}
 \item Filer Identification Number (CMTE\_ID)
@@ -110,9 +102,8 @@ Poniżej przedstawiono opis zawartości poszczególnych plików w celu przedstaw
 \item Entity Type 
 \end{itemize}
 
-\item Plik zawierający złączenie kandydat - komitet
+\item Plik zawierający złączenie kandydat - komitet którego bardziej szczegółowy opis znajduje się na stronie \cite{fecCandidateComiteeLinkageFile2015} 
 
-\url{http://www.fec.gov/finance/disclosure/metadata/DataDictionaryCandCmteLinkage.shtml}
 
 \begin{itemize}
 \item Committee Identification (CMTE\_ID)
@@ -123,9 +114,7 @@ Poniżej przedstawiono opis zawartości poszczególnych plików w celu przedstaw
 \end{itemize}
 
 
-\item Plik zawierający kandydatów.
-
-\url{http://www.fec.gov/finance/disclosure/metadata/DataDictionaryCandidateMaster.shtml}
+\item Plik zawierający dane na temat kandydatów i ich szczegółowy opis \cite{fecCandMasterFile2015}.
 
 \begin{itemize}
 \item Candidate Identification
@@ -142,9 +131,7 @@ Poniżej przedstawiono opis zawartości poszczególnych plików w celu przedstaw
 \end{itemize}
 
 
-\item Plik zawierający komitety.
-
-\url{http://www.fec.gov/finance/disclosure/metadata/DataDictionaryCommitteeMaster.shtml}
+\item Plik zawierający komitety którego opis znajduje się pod adresem \cite{fecComMasterFile2015}.
 
 \begin{itemize}
 \item Committee Identification (CMTE\_ID)
@@ -167,20 +154,24 @@ Być może na potrzeby projektu taka reprezentacja była by wystarczająca. dane
 
 \subsection{Obszarowe dane o ZIP kodach}
 Dane geograficzne można odnaleźć w kilku miejscach.
-Między innymi jest to otwarte Catrographic Shapefile pochodzący ze strony 
-
-\url {https://www.census.gov/geo/maps-data/data/cbf/cbf_zcta.html}
-
+Między innymi jest to otwarty plik Catrographic Shapefile pochodzący ze strony \cite[US Census Bureau]{unitedStateCensusBureauGeoMaps}
 i zawierający około 33143 kodów.
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{bazaUSCB.png}
+    \caption{Rysunek przedstawiający pokrycie kodów pocztowych z bazy USCB na obszarze USA}
+    \label{fig:imageUSCB}
+\end{figure}
 
-Kolejną bazą ZIP kodów jest baza kodów ESRI dostępna pod adresem (\url{http://www.arcgis.com/home/item.html?id=8d2012a2016e484dafaac0451f9aea24}) na stronie istnieje również opis jak można skonwertować dane do Shapefile'a. Kodów dostępnych w tej bazie jest około 30541. 
+Kolejną bazą ZIP kodów jest baza kodów ESRI dostępna pod adresem \cite[Arcgis]{arcgisDatabase} na stronie istnieje również opis jak można skonwertować dane do Shapefile'a. Kodów dostępnych w tej bazie jest około 30541. 
 
-zdjecie ESRI
-
-Kolejną bazą z danymi jest baza US CB która zawiera 33143. 
- 
-zdjecie US CB 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{bazaESRI.png}
+    \caption{Rysunek przedstawiający pokrycie kodów pocztowych z bazy ESRI na obszarze USA}
+    \label{fig:imageESRI}
+\end{figure}
  
 Wszystkich kodów w  USA jest około 42000, najwięcej zawiera baza  \textit{U.S. Census Bureau} przytoczona powyżej (33143) i podaje przybliżone regiony, natomiast dane pobrane ze strony firmy ESRI zawierają 30541 rekordów. Pomimo to przy wizualizacji obu warstw okazuje się, że dane od firmy ESRI mają lepszą dokładność i większe pokrycie USA. Może to być spowodowane tym że dane z US CB posiadają zduplikowane dane bądź regiony na siebie zachodzą i występuje redundancja danych.
 
@@ -201,13 +192,21 @@ Kody pocztowe mogą zostać przedstawione w dwojakiej formie. Pierwszą jest wiz
 Drugim sposobem są przybliżone obszary w postaci wielokątów na mapie obrazujących dany kod pocztowy. Pobrane dane geograficzne ze strony firmy ESRI po dokładnym przyjrzeniu się mapom wydają się być najbardziej precyzyjne i obejmować niemalże cały obszar USA, pomimo tego, że zawierają 30541 rekordów w stosunku do około 42000 wszystkich kodów pocztowych występujących w USA. Zaletą tego sposobu przedstawienia danych byłaby możliwość przedstawienia danych dotyczących finansowania poprzez gradient konkretnych obszarów. Wadą jest w tym przypadku potencjalna niedokładność prezentacji danych, lub wręcz brak prezentacji niektórych danych finansowych poprzez brak złączenia z danymi geograficznymi.
 \section{Technologie wykonania}
 
-Na potrzeby tworzonej aplikacji zostanie stworzona struktura przechowująca pobrane dane dotyczące finanosowania kandatów. Zostanie stworzony skrypt, który zapisze potrzebne dane z plików CSV do bazy danych PostgreSQL. Dane geograficzne również będą przechowywane w bazie danych, dodatkowo będzie zainstalowana nakładka PostGIS umożliwiająca wykonywanie zapytań przestrzennych.
+Na potrzeby tworzonej aplikacji zostanie stworzona struktura przechowująca pobrane dane dotyczące finanosowania kandatów. Zostanie stworzony skrypt, który zapisze potrzebne dane z plików CSV do bazy danych \textit{\textbf{PostgreSQL}}. Dane geograficzne również będą przechowywane w bazie danych, dodatkowo będzie zainstalowana nakładka \textit{\textbf{PostGIS}} umożliwiająca wykonywanie zapytań przestrzennych.
 
-Z uwagi na chęć zapewnienia najwiekszej elastyczności w pobieraniu oraz prezentacji danych zostanie stworzona aplikacja internetowa umożliwiająca serwowania danych w przeglądarce. Do tego celu zostanie wykorzystany Geoserver, czyli serwer aplikacyjny, który będzie odbierał przy pomocy REST API zapytań HTTP o zawartość do wyświetlenia. Geoserver jako popularny kontener serwletów umożliwia w prosty sposób połączenia z bazą danych PostgreSQL oraz prezentację danych geograficznych.
+Z uwagi na chęć zapewnienia najwiekszej elastyczności w pobieraniu oraz prezentacji danych zostanie stworzona aplikacja internetowa umożliwiająca serwowania danych w przeglądarce. Do tego celu zostanie wykorzystany \textit{\textbf{Geoserver}}, czyli serwer aplikacyjny, który będzie odbierał przy pomocy REST API zapytań HTTP o zawartość do wyświetlenia. \textit{\textbf{Geoserver}} jako popularny kontener serwletów umożliwia w prosty sposób połączenia z bazą danych PostgreSQL oraz prezentację danych geograficznych.
 
-Warstwa prezentacji, czyli stworzenie komponentów HTML umożliwiających opisane w pierwszym punkcie funkcjonalności (np. wybór wyborów oraz kandydatów), zostanie wykonana przy pomocy biblioteki języka JavaScript AngularJS. Umożliwia on w prosty sposób konstruowanie żądań HTTP do danego API, a także pozwala jego zastosowanie pozwoli odseparować warstwę widoku od serwera aplikacji i danych. 
+Warstwa prezentacji, czyli stworzenie komponentów HTML umożliwiających opisane w pierwszym punkcie funkcjonalności (np. wybór wyborów oraz kandydatów), zostanie wykonana przy pomocy biblioteki języka JavaScript \textit{\textbf{AngularJS}}. Umożliwia on w prosty sposób konstruowanie żądań HTTP do danego API, a także pozwala jego zastosowanie pozwoli odseparować warstwę widoku od serwera aplikacji i danych. 
+
 
 \section{Pomocne linki}
-
-
+W niniejszej sekcji znajdują się linki do żródeł, na które autorzy natrafili podczas prób zdiagnozowania problemu.
+\begin{itemize}
+\item \cite[Atrykuł przedstawiający ładowanie ShapeFile do bazy danych PostGIS]{loadShpDataIntoPostGis}
+\item \cite[Atrykuł pokazujący obsługę GeoSerwera]{servepostgisdata1}
+\item \cite[Wątek opisujący załadowanie pliku z bazą danych eESRI i konwersje fo Shapefile'a]{loadESRIDataAndConvertToShape}
+\item \cite[Strona Wiki opisująca sposób ekstrakcji danych geograficznych do bazy postGisowej]{osmToPostGIS}
+\end{itemize}
+\bibliography{bibliografia}{}
+\bibliographystyle{plain}
 \end{document}
