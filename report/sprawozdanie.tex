@@ -6,7 +6,7 @@
 \usepackage{amssymb}
 \usepackage{graphicx}
 \usepackage{verbatim}
-\usepackage{minted}
+%\usepackage{minted}
 \usepackage{amsmath}
 \usepackage{algorithm}
 \usepackage[noend]{algpseudocode}
@@ -36,7 +36,7 @@ Użytkownik będzie miał możliwość wybrania dane z których wyborów chce og
 \item wielkość darowizn bezpośrednich
 \item wielkość dotacji od komitetu wyborczego 
 \end{enumerate}
- Będzie to dodatkowa możliwość. Po jej wybraniu nastąpi dodatkowe filtrowanie danych pod kątem regionu w którym wpłynęły, jak również rodzaju darowizn (bezpośrednie i od komitetów “POC”).
+ Będzie to dodatkowa możliwość. Po jej wybraniu nastąpi dodatkowe filtrowanie danych pod kątem regionu w którym wpłynęły, jak również rodzaju darowizn (bezpośrednie i od komitetów).
 \item Wybór prezentacji danych na mapie:
 \begin{enumerate}
 \item dla całego kraju
@@ -45,7 +45,7 @@ Użytkownik będzie miał możliwość wybrania dane z których wyborów chce og
 \end{enumerate}
 
 W początkowej fazie dane będą pokazane na obszarze całego kraju. Po wejściu w 
-konkretny  stan zostaną wyświetlone bardziej szczegółowae dane na jego temat 
+konkretny  stan zostaną wyświetlone bardziej szczegółowe dane na jego temat 
 (podział na mniejsze okręgi). 
 
 \end{enumerate}
@@ -144,13 +144,10 @@ Poniżej przedstawiono opis zawartości poszczególnych plików w celu przedstaw
 
 
 Dane pochodzące ze strony FEC dane dotyczące finansowania są przechowywane w plikach tekstowych o przedstawionej powyżej strukturze. Na potrzeby naszej aplikacji powstanie narzędzie parsujące te pliki tekstowe oraz przeprowadzające ich zapis do bazy danych o analogicznej strukturze tabel. 
-\section{pobranie danych geograficznych}
-Dane geograficzne można pobrać w dwóch formach. Jedn z nich jes formą punktową a druga obszarową.
+\section{Pobranie danych geograficznych}
+Dane geograficzne można pobrać w dwóch formach. Jedną z nich jest formą punktową, a druga obszarową.
 \subsection{Punktowe dane o ZIP kodach\label{sec:punktZIP}}
-Dane o ZIP kodach można pobrtać w postaci plików z rozszerzeniem CSV. Zawierają one dane takie jak ZIP, latitude(długość) i longtitude(szerokość).
-
-Sprawia to że zip kody są na umiejscowione na mapie, ale ich występowanie jast punktowe.
-Być może na potrzeby projektu taka reprezentacja była by wystarczająca. dane dotyczące finansowania wyborów na danym obszarze przedstawiano by za pomocą słupków w tych punktach.
+Dane o ZIP kodach można pobrać w postaci plików z rozszerzeniem CSV. Zawierają one dane takie jak ZIP, latitude (długość) i longitude (szerokość). Sprawia to, że zip kody są na umiejscowione na mapie, ale ich występowanie jest punktowe. Na potrzeby naszego projektu możliwe byłoby przedstawienie danych finansowych w formie słupków lub podobnej formie prezentacji danych punktowo na mapie.
 
 \subsection{Obszarowe dane o ZIP kodach\label{sec:obszZIP}}
 Dane geograficzne można odnaleźć w kilku miejscach.
@@ -164,7 +161,7 @@ i zawierający około 33143 kodów.
     \label{fig:imageUSCB}
 \end{figure}
 
-Kolejną bazą ZIP kodów jest baza kodów ESRI dostępna pod adresem \cite[Arcgis]{arcgisDatabase} na stronie istnieje również opis jak można skonwertować dane do Shapefile'a. Kodów dostępnych w tej bazie jest około 30541. 
+Kolejną, publicznie dostępną bazą ZIP kodów jest baza kodów ESRI dostępna pod adresem \cite[Arcgis]{arcgisDatabase} na stronie istnieje również opis jak można skonwertować dane do Shapefile'a. Kodów dostępnych w tej bazie jest około 30541. 
 
 \begin{figure}[H]
     \centering
@@ -173,7 +170,7 @@ Kolejną bazą ZIP kodów jest baza kodów ESRI dostępna pod adresem \cite[Arcg
     \label{fig:imageESRI}
 \end{figure}
  
-Wszystkich kodów w  USA jest około 42000, najwięcej zawiera baza  \textit{U.S. Census Bureau} przytoczona powyżej (33143) i podaje przybliżone regiony, natomiast dane pobrane ze strony firmy ESRI zawierają 30541 rekordów. Pomimo to przy wizualizacji obu warstw okazuje się, że dane od firmy ESRI mają lepszą dokładność i większe pokrycie USA. Może to być spowodowane tym że dane z US CB posiadają zduplikowane dane bądź regiony na siebie zachodzą i występuje redundancja danych.
+Wszystkich kodów w  USA jest około 42000, najwięcej zawiera baza  \textit{U.S. Census Bureau} przytoczona powyżej (33143) i podaje przybliżone regiony, natomiast dane pobrane ze strony firmy ESRI zawierają 30541 rekordów. Pomimo to przy wizualizacji obu warstw okazuje się, że dane od firmy ESRI mają lepszą dokładność i większe pokrycie USA. Może to być spowodowane tym że dane z US CB posiadają zduplikowane dane, bądź regiony na siebie zachodzą i występuje redundancja danych.
 
 
 \subsection{Wybranie klucza złączenia}
@@ -185,7 +182,7 @@ Na podstawie danych dostarczonych przez FEC kluczem złączenia danych dotycząc
 \item City or Town
 \end{itemize}
 
-Dana dotycząca stanu może być na nasze potrzeby zbyt ogólna, podobnie informacja o mieście lub wsi, taki klucz może nie być wystarczająco precyzyjny, co więcej dane geograficzne zawierające takie dane mogą zawierać tylko wycinki obszarów. Najbardziej dokładnym atrybutem jest kod pocztowy. Należy mieć jednak na uwadze, że taka dana również nie jest idealną reprezentacją, ponieważ kod pocztowy w głównym zamyśle powstał dla ułatwienia organizacja przesyłek pocztowych, dlatego też często zdarza się, że wieżowiec lub wielkie przedsiębiorstwo zajmujące spory obszar geograficzny może posiadać swój indywidualny kod pocztowy. 
+Dana dotycząca stanu może być na nasze potrzeby zbyt ogólna, podobnie informacja o mieście lub wsi, taki klucz może nie być wystarczająco precyzyjny, co więcej dane geograficzne zawierające takie dane mogą zawierać tylko wycinki obszarów. Najbardziej dokładnym atrybutem jest kod pocztowy i właśnie ten atrybut został przez nas wytypowany jako klucz złączenia danych. Należy mieć jednak na uwadze, że taka dana również nie jest idealną reprezentacją, ponieważ kod pocztowy w głównym zamyśle powstał dla ułatwienia organizacja przesyłek pocztowych, dlatego też często zdarza się, że wieżowiec lub wielkie przedsiębiorstwo zajmujące spory obszar geograficzny może posiadać swój indywidualny kod pocztowy. 
 
 Kody pocztowe mogą zostać przedstawione w dwojakiej formie. Pierwszą jest wizualizacja danych na podstawie punktowych danych dotyczących kodów pocztowych. Tzn. każdy kod pocztowy posiada współrzędne geograficzne do niego przypisane. Znalezione dane punktowe są najdokładniejsze, ponieważ zawierają współrzędne dla 42522 kodów i można wnioskować, że są to wszystkie występujące dane. Problemem w przypadku ewentualnej wizualizacji naszego problemu finansowania kampanii wyborczej może być sposób prezentacji na mapie takich danych. Można byłoby tego dokonać za pomocą różnej wielkości słupków, bądź okręgów przypisanych do danej długości i szerokości geograficznej. Niewątpliwą zaletą tej metody jest dokładność, ponieważ najprawdopodobniej wszystkie dane geograficzne uzyskałyby złączenie z danymi dotyczącymi finansowania.
 
@@ -193,17 +190,17 @@ Drugim sposobem są przybliżone obszary w postaci wielokątów na mapie obrazuj
 
 \section{Technologie wykonania}
 
-Na potrzeby tworzonej aplikacji zostanie stworzona struktura przechowująca pobrane dane dotyczące finanosowania kandatów. Zostanie stworzony skrypt, który zapisze potrzebne dane z plików CSV do bazy danych \textit{\textbf{PostgreSQL}}. Dane geograficzne również będą przechowywane w bazie danych, dodatkowo będzie zainstalowana nakładka \textit{\textbf{PostGIS}} umożliwiająca wykonywanie zapytań przestrzennych.
+Na potrzeby tworzonej aplikacji zostanie stworzona struktura przechowująca pobrane dane dotyczące finansowania kandydatów. Zostanie stworzony skrypt, który zapisze potrzebne dane z plików CSV do bazy danych \textit{\textbf{PostgreSQL}}. Dane geograficzne również będą przechowywane w bazie danych, dodatkowo będzie zainstalowana nakładka \textit{\textbf{PostGIS}} umożliwiająca wykonywanie zapytań przestrzennych.
 
-Pobieranie danych o ZIP kodach było rozpatrywane w dwóch wariantach: punktowym (\ref*{sec:punktZIP}) i obszarowym (\ref*{sec:obszZIP}). Zdecydowano się na pobranie ich w formie obszarowej. Najprawdopodobniej będzie to lepiej służyło potrzebom aplikacji. Spośród dwóch rozpatrywanych baz (ESRI i USCB) lepsza wydaje się baza \textit{\textbf{ESRI}}. Ponieważ pomimo mniejszej ilości występujących w niej kodów, na rysunkach \ref{fig:imageESRI} i \ref{fig:imageUSCB} widać że baza \textit{\textbf{ESRI}} ma większe pokrycie na terenie całego USA. To pokrycie obszaru USA w połączeniu z danymi adresowymi darczyńcy będzie mogło posłużyć do złączenia danych nawet w przypadku nie występowania ZIP kodu darczyńcy w bazie.  
+Pobieranie danych o ZIP kodach było rozpatrywane w dwóch wariantach: punktowym (\ref*{sec:punktZIP}) i obszarowym (\ref*{sec:obszZIP}). Zdecydowano się na pobranie ich w formie obszarowej. Najprawdopodobniej będzie to umożliwiało lepszą prezentację wyników. Spośród dwóch rozpatrywanych baz (ESRI i USCB) lepsza wydaje się baza \textit{\textbf{ESRI}}. Ponieważ pomimo mniejszej ilości występujących w niej kodów, na rysunkach \ref{fig:imageESRI} i \ref{fig:imageUSCB} widać że baza \textit{\textbf{ESRI}} ma większe pokrycie na terenie całego USA. To pokrycie obszaru USA w połączeniu z danymi adresowymi darczyńcy będzie mogło posłużyć do złączenia danych nawet w przypadku nie występowania ZIP kodu darczyńcy w bazie.  
 
 Z uwagi na chęć zapewnienia największej elastyczności w pobieraniu oraz prezentacji danych zostanie stworzona aplikacja internetowa umożliwiająca serwowania danych w przeglądarce. Do tego celu zostanie wykorzystany \textit{\textbf{Geoserver}}, czyli serwer aplikacyjny, który będzie odbierał przy pomocy REST API zapytań HTTP o zawartość do wyświetlenia. \textit{\textbf{Geoserver}} jako popularny kontener serwletów umożliwia w prosty sposób połączenia z bazą danych PostgreSQL oraz prezentację danych geograficznych.
 
-Warstwa prezentacji, czyli stworzenie komponentów HTML umożliwiających opisane w pierwszym punkcie funkcjonalności (np. wybór wyborów oraz kandydatów), zostanie wykonana przy pomocy biblioteki języka JavaScript \textit{\textbf{AngularJS}}. Umożliwia on w prosty sposób konstruowanie żądań HTTP do danego API, a także pozwala jego zastosowanie pozwoli odseparować warstwę widoku od serwera aplikacji i danych. 
+Warstwa prezentacji, czyli stworzenie komponentów HTML umożliwiających opisane w pierwszym punkcie funkcjonalności (np. wybór wyborów oraz kandydatów), zostanie wykonana przy pomocy biblioteki języka JavaScript \textit{\textbf{AngularJS}}. Umożliwia on w prosty sposób konstruowanie żądań HTTP do danego API, a także jego zastosowanie pozwoli odseparować warstwę widoku od serwera aplikacji i danych. 
 
 
 \section{Pomocne linki}
-W niniejszej sekcji znajdują się linki do żródeł, na które autorzy natrafili podczas prób zdiagnozowania problemu.
+W niniejszej sekcji znajdują się linki do źródeł, na które autorzy natrafili podczas prób zdiagnozowania problemu.
 \begin{itemize}
 \item \cite[Atrykuł przedstawiający ładowanie ShapeFile do bazy danych PostGIS]{loadShpDataIntoPostGis}
 \item \cite[Atrykuł pokazujący obsługę GeoSerwera]{servepostgisdata1}
