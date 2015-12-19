@@ -27,13 +27,14 @@
 
 \section{Funkcjonalności}
 \begin{enumerate}
-\item Wybór rocznika wyborów prezydenckich (ustalić czy również innego typu). Użytkownik będzie miał możliwość wybrania dane z których wyborów chce oblądać. Dostępne będą tylko dane z wyborów prezydenckich.
-\item Wybór kandydata z listy. W systemie będdzie dostępna lista kandydatów którzy brali udział w wyborach. Użytkownik będzie miał możliwość wybrania konkretnego kandydata i wyświetlenia danych o dotacjach dotyczących tylko jego kandydatury. Będzie też możliwość wyświetlenia zagregowanych danych dotyczących wszystkich kandydatów. 
+\item Wybór rocznika wyborów prezydenckich  
+Użytkownik będzie miał możliwość wybrania dane z których wyborów chce oglądać. Dostępne będą tylko dane z wyborów prezydenckich.
+\item Wybór kandydata z listy. W systemie będzie dostępna lista kandydatów którzy brali udział w wyborach. Użytkownik będzie miał możliwość wybrania konkretnego kandydata i wyświetlenia danych o dotacjach dotyczących tylko jego kandydatury. Będzie też możliwość wyświetlenia zagregowanych danych dotyczących wszystkich kandydatów. 
 \item Wybór prezentowanych danych na mapce:
 \begin{enumerate}
-\item wielkość wszystkich środków uzyskanych z danego regionu (stanu?)
+\item wielkość wszystkich środków uzyskanych z danego regionu 
 \item wielkość darowizn bezpośrednich
-\item wielkość dotacji od komitetu wyborczego (jak zaprezentować komitet wyborczy na mapie? po ZIP kodzie? komitet ogranicza się do stanu?)
+\item wielkość dotacji od komitetu wyborczego 
 \end{enumerate}
  Będzie to dodatkowa możliwość. Po jej wybraniu nastąpi dodatkowe filtrowanie danych pod kątem regionu w którym wpłynęły, jak również rodzaju darowizn (bezpośrednie i od komitetów “POC”).
 \item Wybór prezentacji danych na mapie:
@@ -49,9 +50,8 @@ konkretny  stan zostaną wyświetlone bardziej szczegółowae dane na jego temat
 
 \end{enumerate}
 \section{Pobranie danych dotyczących wyborów}
-Do pobrania danych dotyczących wyborów zdecydowaliśmy się na wykorzystanie API jakie udostępnia New York Times na swoich stronach. Dane uzyskiwane będą w formacie json.   
-Sposoby uzyskania przykładowych danych są przedstawione poniżej. 
-Rozpatrywano dwa sposoby pobierania danych. Pierwszym z nich było korzystanie z API wystawionego przez NYTimes  do pobierania danych w formacie json. Kolejnym było pobranie na dysk plików z danymi dotyczącymi wyborów bezpośrednio na dysk twardy i przechowywanie ich w bazie danych.
+Do pobrania danych dotyczących wyborów rozpatrywaliśmy API jakie udostępnia New York Times na swoich stronach. Dane można uzyskać w formacie xml w formacie json.   
+Rozpatrywano dwa sposoby pobierania danych. Pierwszym z nich było korzystanie z API wystawionego przez New York Times  do pobierania danych w formacie json. Kolejnym było pobranie na dysk plików z danymi dotyczącymi wyborów bezpośrednio na dysk twardy i przechowywanie ich w bazie danych.
 \subsection{New York Times API- pobieranie potrzebnych fragmentów danych w formacie json}
 \textbf{Indywidualne wpłaty na danego kandydata:}
 
