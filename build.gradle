@@ -1,0 +1,47 @@
+apply plugin: 'idea'
+
+allprojects {
+    group 'pl.edu.pw.elka'
+    version '0.1'
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+
+}
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'org.postgresql:postgresql:9.3-1102-jdbc41'
+    }
+}
+
+task cleanDb << {
+    // This is needed to get postgresql driver onto the Groovy/Gradle classpath
+    URLClassLoader loader = groovy.sql.Sql.class.classLoader
+    project.buildscript.configurations.classpath.each { File file ->
+        loader.addURL(file.toURI().toURL())
+    }
+
+    Properties properties = new Properties()
+    properties.load(new FileInputStream("application.properties"))
+
+    Class.forName(properties.get('jdbc.driverClassName'))
+    println 'Connecting to db...'
+    groovy.sql.Sql sql = groovy.sql.Sql.newInstance(
+            properties.get('jdbc.url'),
+            properties.get('jdbc.username'),
+            properties.get('jdbc.password'),
+            properties.get('jdbc.driverClassName')
+    )
+    println 'Connected!'
+
+    String sqlString = new File("tass.sql").text
+    sql.execute(sqlString)
+    println 'Executed tass.sql script!'
+}
