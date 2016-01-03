@@ -1,4 +1,5 @@
 apply plugin: 'idea'
+apply plugin: 'de.undercouch.download'
 
 allprojects {
     group 'pl.edu.pw.elka'
@@ -14,11 +15,16 @@ allprojects {
 buildscript {
     repositories {
         mavenCentral()
+        jcenter()
     }
 
     dependencies {
         classpath 'org.postgresql:postgresql:9.3-1102-jdbc41'
+        classpath 'de.undercouch:gradle-download-task:2.1.0'
+        classpath 'ant:ant:1.7.0'
+        classpath 'org.apache.ant:ant-launcher:1.9.6'
     }
+
 }
 
 task cleanDb << {
@@ -44,4 +50,36 @@ task cleanDb << {
     String sqlString = new File("tass.sql").text
     sql.execute(sqlString)
     println 'Executed tass.sql script!'
+}
+
+def downloadAndUnzip(fileType, year) {
+    groovy.util.AntBuilder antBuilder = new groovy.util.AntBuilder()
+    def fileName = fileType + year.toString().substring(2)
+    download {
+        src 'ftp://ftp.fec.gov/FEC/' + year + '/' + fileName + '.zip'
+        dest 'data/'
+    }
+    antBuilder.unzip(
+      src: 'data/' + fileName  + '.zip',
+      dest: 'data/unzipped/' + fileName,
+      overwrite: "false")
+}
+
+task getData << {
+    mkdir('data/')
+    mkdir('data/unzipped/')
+
+    // 1980 - 2012
+    for (i in 1980..2012) {
+        if (i % 2 == 0) {
+            downloadAndUnzip('cn', i)
+            downloadAndUnzip('cm', i)
+            downloadAndUnzip('pas2', i)
+            downloadAndUnzip('indiv', i)
+            if (i >= 2000) {
+                downloadAndUnzip('ccl', i)
+            }
+        }
+    }
+
 }

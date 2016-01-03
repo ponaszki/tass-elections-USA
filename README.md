@@ -23,3 +23,9 @@ Execute script on local database:
 ```
 gradle cleanDb
 ```
+
+To download data from FEC file execute gradle task 'getData'
+
+```
+gradle getData
+```

@@ -1,1 +1,3 @@
 .gradle/
+data/unzipped/*/*.txt
+*.zip
