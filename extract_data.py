@@ -60,7 +60,7 @@ def extract_data():
             host=props.get('db', 'db_host'),
             port=props.get('db', 'db_port'))
 
-        insert_all(2010, 2012, con)
+        insert_all(1996, 1996, con)
         con.commit()
 
     except psycopg2.DatabaseError as e:
