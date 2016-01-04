@@ -24,8 +24,13 @@ Execute script on local database:
 gradle cleanDb
 ```
 
-To download data from FEC file execute gradle task 'getData'
+To download data from FEC file execute gradle task 'getData':
 
 ```
 gradle getData
+```
+
+Extract data from FEC files into postgreSQL database using python script:
+```
+sudo apt-get install python3-psycopg2
 ```

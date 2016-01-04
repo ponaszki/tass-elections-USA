@@ -35,7 +35,7 @@ task cleanDb << {
     }
 
     Properties properties = new Properties()
-    properties.load(new FileInputStream("application.properties"))
+    properties.load(new FileInputStream("app_config.properties"))
 
     Class.forName(properties.get('jdbc.driverClassName'))
     println 'Connecting to db...'
