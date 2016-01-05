@@ -55,4 +55,18 @@ Convert ESRI GDP file to SHP:
 http://gis.stackexchange.com/questions/108006/how-to-convert-data-from-a-gdb-into-a-shapefile-without-arcmap
 
 Extract SHP geographic data into postgreSQL DB:
+
 http://suite.opengeo.org/opengeo-docs/dataadmin/pgGettingStarted/shp2pgsql.html
+
+3. Setup geoserver:
+
+http://docs.geoserver.org/stable/en/user/installation/linux.html
+
+Start server:
+```
+cd /usr/share/geoserver/bin
+./startup.sh
+```
+
+Publish geographic data from postGIS db to geoserver:
+http://docs.geoserver.org/stable/en/user/gettingstarted/postgis-quickstart/index.html
