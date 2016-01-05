@@ -3,7 +3,7 @@
 Install postgreSQL:
 ```
 sudo apt-get update
-sudo apt-get install postgresql postgresql-contrib
+sudo apt-get install postgresql postgresql-contrib postgis postgresql-9.4-postgis-2.1 postgresql-9.4-postgis-scripts postgresql-9.4-postgis-2.1-scripts
 ```
 
 Create user and database:
@@ -11,6 +11,14 @@ Create user and database:
 sudo -i -u postgres
 createuser --interactive // create "tass-user"
 createdb tass
+```
+
+Setup postgis extension:
+```
+sudo -i -u postgres // login as superuser
+psql -d tass
+CREATE EXTENSION postgis;
+CREATE EXTENSION postgis_topology;
 ```
 
 Setup password for test user:
@@ -42,9 +50,9 @@ extract_data.py
 
 http://www.arcgis.com/home/item.html?id=8d2012a2016e484dafaac0451f9aea24
 
-Convert ESRI gdb file to SHP:
+Convert ESRI GDP file to SHP:
 
 http://gis.stackexchange.com/questions/108006/how-to-convert-data-from-a-gdb-into-a-shapefile-without-arcmap
 
-
-
+Extract SHP geographic data into postgreSQL DB:
+http://suite.opengeo.org/opengeo-docs/dataadmin/pgGettingStarted/shp2pgsql.html
