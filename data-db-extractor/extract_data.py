@@ -48,7 +48,7 @@ def insert_all(first_interval, sec_interval, con):
 
 def extract_data():
     props = cp.RawConfigParser()
-    props.read('app_config.properties')
+    props.read('../data/app_config.properties')
 
     con = None
 

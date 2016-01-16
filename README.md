@@ -57,6 +57,9 @@ http://gis.stackexchange.com/questions/108006/how-to-convert-data-from-a-gdb-int
 Extract SHP geographic data into postgreSQL DB:
 
 http://suite.opengeo.org/opengeo-docs/dataadmin/pgGettingStarted/shp2pgsql.html
+```
+shp2pgsql -I -s 4326 esri-zip-codes.shp geo_zip_codes | psql -U tass-user -d tass
+```
 
 3. Setup geoserver:
 
@@ -70,3 +73,5 @@ cd /usr/share/geoserver/bin
 
 Publish geographic data from postGIS db to geoserver:
 http://docs.geoserver.org/stable/en/user/gettingstarted/postgis-quickstart/index.html
+
+npm install openlayers
