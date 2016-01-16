@@ -74,4 +74,15 @@ cd /usr/share/geoserver/bin
 Publish geographic data from postGIS db to geoserver:
 http://docs.geoserver.org/stable/en/user/gettingstarted/postgis-quickstart/index.html
 
+Add layer based on SQL view with name "sum_96_param" and SQL statement:
+```
+SELECT sum(cc.transaction_amt), cc.zip_code, gz.geom
+FROM candidates ca
+	inner join committees co on ca.cand_id=co.cand_id
+	inner join ind_contribs cc on co.cmte_id=cc.cmte_id
+	inner join geo_zip_codes gz on cc.zip_code=gz.zip_code WHERE ca.cand_id='%cand_id%' and ca.cand_office='P' GROUP BY cc.zip_code, gz.geom
+```
+guess parameters from SQL and get attirubutes.
+After defining layer go to edit and set 'Declated SRS' to 'EPSG:4326'. In bounding boxes click 'Compute from data' and 'Compute from native bounds'. After that go to 'Publishing' layer and set default style to 'Polygon'.
+
 npm install openlayers
