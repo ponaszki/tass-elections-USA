@@ -12,6 +12,24 @@ ul {
   padding-left: 10px;
 }
 
+div{
+    font-family: Tahoma, Verdana, Segoe, sans-serif;
+    padding: 5px;
+}
+
+.fff{
+    display:flex;
+}
+
+.fixed{
+    background-color:	#E6E6FA;
+    width: 150px;
+}
+
+.flex-item{
+    flex-grow: 1;
+}
+
 .container {
   max-width: 400px;
   background-color: #eeeeee;
@@ -24,4 +42,51 @@ ul {
 
 .solid {
   border-style: solid;
+}
+.groove {
+  border-style: groove;
+}
+
+.groove {
+  float:right;
+}
+.square1 {
+	width: 25px;
+	height: 25px;
+	background: #800026;
+}
+.square2 {
+	width: 25px;
+	height: 25px;
+	background: #BD0026;
+}
+.square3 {
+	width: 25px;
+	height: 25px;
+	background: #E31A1C;
+}
+.square4 {
+	width: 25px;
+	height: 25px;
+	background: #FC4E2A;
+}
+.square5 {
+	width: 25px;
+	height: 25px;
+	background: #FD8D3C;
+}
+.square6 {
+	width: 25px;
+	height: 25px;
+	background: #FEB24C;
+}
+.square7 {
+	width: 25px;
+	height: 25px;
+	background: #FED976;
+}
+.square8 {
+	width: 25px;
+	height: 25px;
+	background: #FFEDA0;
 }
