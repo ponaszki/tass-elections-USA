@@ -28,6 +28,19 @@
                   ng-options="cand as cand.cand_name for cand in candidates track by cand.cand_id"
                   ng-change="updateCand()">
           </select>
+          <div></div>
+          <label>
+            <input type="checkbox"
+                   ng-model="data_individual"
+                   ng-change="updateCand()">
+            Darowizny bezpośrednie
+          </label><br/>
+          <label>
+            <input type="checkbox"
+                   ng-model="data_committees"
+                   ng-change="updateCand()">
+            Darowizny komitetów wyborczych
+          </label><br/>
           <!-- <div>Selected todo: {{ {selected_todo:selectedCand} }}</div> -->
           <!-- <button type="submit"
                   class="btn btn-primary btn-lg btn-block"

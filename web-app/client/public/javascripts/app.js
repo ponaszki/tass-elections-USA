@@ -6,13 +6,31 @@ angular.module('tassApp', [])
     $scope.todoData = {};
     $scope.candidates = {};
 
-    var map = getBaseMap();
+    var map;
 
     var vecLayer;
     $scope.updateCand = function() {
+      var selectedCand = $scope.selectedCand;
+      if (map === undefined
+          && selectedCand !== undefined
+          && selectedCand.cand_id !== undefined) {
+            // show base maps
+            map = getBaseMap();
+      }
+
+      var finDataInd = $scope.data_individual;
+      var finDataComm = $scope.data_committees;
+      if (selectedCand === undefined && selectedCand.cand_id === undefined) {
+            console.log("dupa");
+            return;
+      }
+      console.log(selectedCand);
+      console.log(finDataComm);
+      console.log(finDataInd);
       map.removeLayer(vecLayer);
       console.log($scope.selectedCand.cand_id);
-      vecLayer = getVectorLayer($scope.selectedCand.cand_id);
+
+      vecLayer = getVectorLayer($scope.selectedCand.cand_id, finDataInd, finDataComm);
       map.addLayer(vecLayer);
     }
 
@@ -27,19 +45,31 @@ angular.module('tassApp', [])
 
 });
 
-function getVectorLayer(candId) {
+function getVectorLayer(candId, finDataInd, finDataComm) {
   var geoJSON = new ol.format.GeoJSON();
   var sourceVector = new ol.source.Vector({
       loader: function(extent, resolution, projection) {
-        console.log("cand_id in url: " + candId);
+        var viewName;
+        if (finDataInd === true && finDataComm === true) {
+          viewName = 'cite:sum_96';
+        } else if (finDataInd === true) {
+          viewName = 'cite:sum_96_ind';
+        } else if (finDataComm === true) {
+          viewName = 'cite:sum_96_comm';
+        } else {
+          console.log("Don't know which vector data to get!");
+          return;
+        }
+        console.log(viewName);
         var url =
           'http://localhost:8080/geoserver/cite/wfs?service=WFS' +
-            '&version=1.1.0&request=GetFeature&typename=cite:sum_96_param' +
-            '&outputFormat=text/javascript&format_options=callback:loadFeatures' +
-            '&viewparams=CAND_ID:' + candId + //'S2IL00028'
-            '&srsName=EPSG:3857&bbox=' + extent.join(',');// + ',EPSG:3857';
+          '&version=1.1.0&request=GetFeature' +
+          '&typename=' + viewName +
+          '&outputFormat=text/javascript&format_options=callback:loadFeatures' +
+          '&viewparams=CAND_ID:' + candId + //'S2IL00028'
+          '&srsName=EPSG:3857&bbox=' + extent.join(',');// + ',EPSG:3857';
+          console.log(url);
 
-          // console.log("WFS: " + url);
           $.ajax({url: url, dataType: 'jsonp', jsonp: false})
         },
         strategy: ol.loadingstrategy.tile(ol.tilegrid.createXYZ({
@@ -80,8 +110,8 @@ function getBaseMapLayer() {
         'SRS': 'EPSG:3857'
       },
       serverType: 'geoserver'
-    })),
-    opacity: 0.7
+    }))
+    , opacity: 0.8
   });
 }
 
@@ -100,12 +130,12 @@ function getBaseMap() {
 
 function getColor(feature) {
   console.log("G': " + feature.G.sum);
-  return feature.G.sum > 9000 ? '#800026' :
-         feature.G.sum > 8000 ? '#BD0026' :
-         feature.G.sum > 5000 ? '#E31A1C' :
-         feature.G.sum > 2000 ? '#FC4E2A' :
-         feature.G.sum > 1000 ? '#FD8D3C' :
-         feature.G.sum > 600  ? '#FEB24C' :
+  return feature.G.sum > 20000 ? '#800026' :
+         feature.G.sum > 10000 ? '#BD0026' :
+         feature.G.sum > 8000 ? '#E31A1C' :
+         feature.G.sum > 6000 ? '#FC4E2A' :
+         feature.G.sum > 3000 ? '#FD8D3C' :
+         feature.G.sum > 1000 ? '#FEB24C' :
          feature.G.sum > 500  ? '#FED976' :
                                 '#FFEDA0' ;
 }
