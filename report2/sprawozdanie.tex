@@ -146,6 +146,8 @@ Następnie uruchomić serwer poprzez następujące komendy:
   # ./startup.sh
 \end{lstlisting}
 
+Domyślnie panel administracyjny będzie dostępny pod adresem \url{localhost:8080/geoserver/web}. Standardowo nazwą użytkownika jest "admin" natomiast hasłem "geoserver".
+
 Kolejnym krokiem jest podłączenie źródła danych z bazy PostgreSQL do serwera \textit{geoserver} zgodnie z poradnikiem ze strony \url{http://docs.geoserver.org/stable/en/user/gettingstarted/postgis-quickstart/index.html} 
 
 Po tych krok możliwe jest pobranie całej mapy w formacie rastrowym do aplikacji przy użyciu usługi internetowej udostępnianej przez \textit{geoserver} - \textbf{WMS}.
@@ -157,9 +159,74 @@ Następnie zostaną stworzone trzy warstwy (ang. \textit{layers}) podstawie wido
 \item[--] połączenie powyższych dwóch wyników finansowych w celu uzyskania sumarycznej sumy pozyskanych środków przez konkretnego kandydata.
 \end{itemize}
 
+Odpowiednio widoki zostały stworzone na podstawie następujących wyrażeń:
+\bigskip \noindent
+Wpłaty indywidualne:
+\begin{lstlisting}[style=BashInputStyle]
+SELECT sum(cc.transaction_amt), cc.zip_code, gz.geom
+FROM candidates ca
+	inner join committees co on ca.cand_id=co.cand_id
+	inner join ind_contribs cc on co.cmte_id=cc.cmte_id
+	inner join geo_zip_codes gz on cc.zip_code=gz.zip_code 
+WHERE ca.cand_id='%cand_id%' and ca.cand_office='P'
+GROUP BY cc.zip_code, gz.geom
+\end{lstlisting}
+\bigskip \noindent
+Wpłaty poprzez komitety wyborcze:
+\begin{lstlisting}[style=BashInputStyle]
+SELECT sum(cc.transaction_amt), cc.zip_code, gz.geom
+FROM candidates ca
+	inner join committees co on ca.cand_id=co.cand_id
+	inner join ind_contribs cc on co.cmte_id=cc.cmte_id
+	inner join geo_zip_codes gz on cc.zip_code=gz.zip_code 
+WHERE ca.cand_id='%cand_id%' and ca.cand_office='P'
+GROUP BY cc.zip_code, gz.geom
+\end{lstlisting}
+\bigskip \noindent
+Łączne wpłaty:
+\begin{lstlisting}[style=BashInputStyle]
+SELECT coalesce(sum(ccc.ccsum + icc.icsum), 
+	sum(ccc.ccsum), sum(icc.icsum)) as suma, 
+	coalesce(ccc.zip_code, icc.zip_code) as zip_code, 
+	coalesce(ccc.geom, icc.geom) as geom 
+FROM
+	(SELECT sum(cc.transaction_amt) as ccsum,
+	 gz.zip_code as zip_code, gz.geom
+	FROM candidates ca
+		inner join committees co on ca.cand_id=co.cand_id
+		inner join comm_contribs cc on co.cmte_id=cc.cmte_id
+		inner join geo_zip_codes gz on cc.zip_code=gz.zip_code 
+	WHERE ca.cand_office='P' and ca.cand_id='%cand_id%' 
+	GROUP BY gz.zip_code, gz.geom) as ccc
+FULL OUTER JOIN
+	(SELECT sum(cc.transaction_amt) as icsum,
+	 gz.zip_code as zip_code, gz.geom
+	FROM candidates ca
+		inner join committees co on ca.cand_id=co.cand_id
+		inner join ind_contribs cc on co.cmte_id=cc.cmte_id
+		inner join geo_zip_codes gz on cc.zip_code=gz.zip_code 
+	WHERE ca.cand_office='P' and ca.cand_id='%cand_id%' 
+	GROUP BY gz.zip_code, gz.geom) as icc
+ON ccc.zip_code=icc.zip_code
+GROUP BY coalesce(ccc.zip_code, icc.zip_code),
+	 coalesce(ccc.geom, icc.geom)
+\end{lstlisting}
 
+Po operacji dodania warstw w panelu administracyjnym \textit{geoservera} możliwe jest wykonywanie zapytań do usługi WFS (Web Feature Service) umożliwiającej pobieranie danych geograficznych w postaci GeoJSON. Dane pobrane w takim formacie będzie można w odpowiedni sposób przeanalizować w aplikacji internetowej i stworzyć warstwy wektorowe umożliwiające prezentację danych na podkładzie mapy udostępnionej w ramach usług WMS.
+
+\subsection{Przygotowanie aplikacji internetowej}
+Ostatnim krokiem w celu prezentacji przechowywanych danych jest uruchomienie aplikacji internetowej. W przypadku naszej realizacji wykorzystaliśmy \textit{framwework} Express oparty o Node.JS. Komponenty HTML umożliwiające wybrania kandydata, czy źródła pobranych danych finansowych zostały zaimplementowane przy pomocy biblioteki AngularJS. 
+
+Za prezentację danych geograficznych oraz wykonywanie zapytań do serwera \textit{geoserver} odpowiada biblioteka openlayers (zaimplementowana w języku JavaScript).
 
 \bigskip \noindent
+Aby uruchomić aplikację konieczne jest wykonanie następującej komendy:
+\begin{lstlisting}[style=BashInputStyle]
+  # npm start
+\end{lstlisting}
+
+Teraz domyślnie aplikacja będzie dostępna pod adresem \url{http://localhost:3000/}
+
 \bigskip \noindent
 \bigskip \noindent
 
