@@ -227,11 +227,46 @@ Aby uruchomić aplikację konieczne jest wykonanie następującej komendy:
 
 Teraz domyślnie aplikacja będzie dostępna pod adresem \url{http://localhost:3000/}
 
-\bigskip \noindent
-\bigskip \noindent
+Poniżej przedstawione zostały przykładowe zrzuty ekranu zrealizowanej aplikacji:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.0\textwidth]{whole.png}
+    \caption{Całe Stany Zjednoczone, mała skala mapy.}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{medium.png}
+    \caption{Średnia skala mapy.}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{small.png}
+    \caption{Duża skala mapy.}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{selector.png}
+    \caption{Wybór kandydata.}
+\end{figure}
+
+Jak widać na podstawie zrzutów niestety nie udało się nam w wyznaczonym czasie zrealizować agregacji danych w przypadku prezentacji danych na mapie o małej skali. Biblioteka openlayers udostępnia funkcjonalność \textit{clusteringu}, tak aby dało się grupować obiekty o odpowiednich wartościach. Inną możliwością mogłoby być zgrupowania konkretnych wartości dla danego stanu.
+
+W stosunku do pierwotnej koncepcji nie zostało zrealizowane wybranie rocznika wyborów ze względu na duże ilości danych przechowywane w bazie danych byłoby niezwykle niewydajne trzymanie wszystkich danych w jednej tabeli, tak jak zrobiliśmy od początku. Chcąc dokonywać zapytań do tak dużych ilości danych należałoby się zastanowić nad lepszą organizacją danych w bazie danych.
 
 \section{Załączniki}
-Skrypt tworzący strukturę bazy danych:
+Załączone archiwum składa się z następujących plików:
+\begin{itemize}
+\item[--] folder \textit{config} przechowujący konfigurację projektu,
+\item[--] folder \textit{data-downloader} zawiera skrypty gradle umożliwiające pobranie danych oraz wykonanie skryptu tworzącego bazę danych (\textit{data-downloader/tass.sql}),
+\item[--] folder \textit{data-db-extractor} zawierający skryptu w języku python umożliwiające napełnianie bazy danych pobranymi danymi,
+\item[--] folder \textit{web-app} zawierający aplikację internetową.
+\end{itemize}
+
+Nie załączamy w przesłanym archiwum warstw SHP zawierających mapę Stanów Zjednoczony, ponieważ zajmuje ona 1.9 GB, jeśli zajdzie taka potrzeba możemy oczywiście dane nagrać na płytę bądź pendrive.
+
+\bigskip
+
+Poniżej zamieszczony został skrypt SQL tworzący strukturę bazy danych:
 \begin{lstlisting}[style=BashInputStyle]
 DROP RULE IF EXISTS 
 "CANDIDATES_on_duplicate_ignore" ON CANDIDATES;
