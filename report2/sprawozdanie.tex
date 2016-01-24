@@ -1,0 +1,100 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{polski}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{verbatim}
+%\usepackage{minted}
+\usepackage{amsmath}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{csvsimple}
+\usepackage{caption}
+\usepackage{listings}     
+\usepackage{subcaption}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[most]{tcolorbox}
+\usepackage{xcolor}
+\usepackage{listings}
+
+\lstdefinestyle{BashInputStyle}{
+  language=bash,
+  basicstyle=\small\sffamily,
+  numbers=left,
+  numberstyle=\tiny,
+  numbersep=3pt,
+  frame=tb,
+  columns=fullflexible,
+  backgroundcolor=\color{yellow!20},
+  linewidth=0.9\linewidth,
+  xleftmargin=0.1\linewidth
+}
+
+\newcommand*{\Package}[1]{\texttt{#1}}%
+
+\author{Onaszkiewicz Przemysław, Gadawski Łukasz}
+\title{Temat 2\\ Dla wskazanego kandydata w wyborach w USA, przedstaw w sposób czytelny na mapie finansowanie jego kampanii wyborczej, z uwzględnieniem darowizn bezpośrednich i poprzez komitety wyborcze. 
+}
+
+\begin{document}
+\maketitle
+
+\section{Architektura rozwiązania}
+Aplikacja składa się następujących elementów:
+\begin{enumerate}
+\item Baza danych PostgreSQL wraz z rozszerzeniem PostGIS.
+\item Instacja serwera \textit{geoserver} umożliwiająca pobieranie danych geograficznych z bazy danych.
+\item Zadania zaimplementowane jako tzw. \textit{task}i w systemie budowania wersji gradle:
+\begin{itemize}
+\item[--] \textit{getData} - umożliwiające pobranie plików CSV zawierających dane numeryczne odpowiednich danych finansowania. Poprzez zmianę skryptu możliwe jest pobranie danych z różnych przedziałów lat.
+\item[--] \textit{cleanDb} - wykonuje połączenie z bazą danych oraz wykonanie skryptu tworzącego strukturę bazy danych.
+\end{itemize} 
+\item Skrypt w języku python przetwarzający pliki CSV z danymi dotyczącymi finansowania i ładującymi odpowiednie dane do bazy danych.
+\item Aplikacja internetowa oparta o framework aplikacji internetowych \textit{Express} stworzony pod kątem aplikacji napisanych w Node.js.
+\begin{itemize}
+\item[--] biblioteka AngualarJS udostępniająca komponenty HTML,
+\item[--] biblioteka openlayers umożliwiające prezentację danych pobranych z serwera \textit{geoserver},z
+\end{itemize}
+\end{enumerate}
+\section{Opis instalacji}
+Aplikacja była testowana na systemie \textit{Linux Mint 17.3 Cinnamon 64-bit} w wersji \textit{2.8.6}. 
+
+\bigskip
+Instalacja bazy danych wraz z rozszerzeniem PostGIS:
+\begin{lstlisting}[style=BashInputStyle]
+  # sudo apt-get update
+  # sudo apt-get install postgresql postgresql-contrib 
+  	postgis postgresql-9.4-postgis-2.1
+  	postgresql-9.4-postgis-scripts 
+  	postgresql-9.4-postgis-2.1-scripts
+\end{lstlisting}
+
+\bigskip
+Przygotowanie bazy danych pod kątek wykorzystania przez serwer \textit{geoserver} oraz aplikację internetową. Stworzenie użytkownika bazy danych:
+\begin{lstlisting}[style=BashInputStyle]
+  # sudo -i -u postgres
+  # createuser --interactive // create "tass-user"
+\end{lstlisting}
+
+\bigskip
+Stworzenie bazy danych:
+\begin{lstlisting}[style=BashInputStyle]
+  # createdb tass
+\end{lstlisting}
+
+\bigskip
+Instalacja rozszerzenie PostGIS umożliwiającego wykonywanie operacji na danych geograficznych:
+\begin{lstlisting}[style=BashInputStyle]
+  # sudo -i -u postgres // login as superuser
+  # psql -d tass
+  # CREATE EXTENSION postgis;
+  # CREATE EXTENSION postgis_topology;
+\end{lstlisting}
+
+
+\end{document}
