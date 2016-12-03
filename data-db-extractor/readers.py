@@ -1,10 +1,10 @@
 
 def __read_obj(year, file_type, file_name, positions):
     year_substr = year[-2:] # e.g. get '10' from '2010'
-    file_path = 'data/unzipped/' + file_type + year_substr + '/' + file_name + '.txt'
+    file_path = '../data/unzipped/' + file_type + year_substr + '/' + file_name + '.txt'
 
     objs = []
-    with open(file_path, "r") as f:
+    with open(file_path, "r", encoding="utf8") as f:
         filtered = (row.replace('\n', '') for row in f)
         for row in filtered:
             fields = row.split('|')

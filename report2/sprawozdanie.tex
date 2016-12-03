@@ -58,7 +58,7 @@ Aplikacja składa się następujących elementów:
 \item Aplikacja internetowa oparta o framework aplikacji internetowych \textit{Express} stworzony pod kątem aplikacji napisanych w Node.js.
 \begin{itemize}
 \item[--] biblioteka AngualarJS udostępniająca komponenty HTML,
-\item[--] biblioteka openlayers umożliwiające prezentację danych pobranych z serwera \textit{geoserver},z
+\item[--] biblioteka openlayers umożliwiające prezentację danych pobranych z serwera \textit{geoserver}
 \end{itemize}
 \end{enumerate}
 \section{Opis instalacji}
@@ -222,6 +222,7 @@ Za prezentację danych geograficznych oraz wykonywanie zapytań do serwera \text
 \bigskip \noindent
 Aby uruchomić aplikację konieczne jest wykonanie następującej komendy:
 \begin{lstlisting}[style=BashInputStyle]
+  # npm install
   # npm start
 \end{lstlisting}
 
@@ -262,8 +263,7 @@ Załączone archiwum składa się z następujących plików:
 \item[--] folder \textit{web-app} zawierający aplikację internetową.
 \end{itemize}
 
-Nie załączamy w przesłanym archiwum warstw SHP zawierających mapę Stanów Zjednoczony, ponieważ zajmuje ona 1.9 GB, jeśli zajdzie taka potrzeba możemy oczywiście dane nagrać na płytę bądź pendrive.
-
+Nie załączamy w przesłanym archiwum warstw SHP zawierających mapę Stanów Zjednoczony, ponieważ zajmuje ona 1.9 GB, jeśli zajdzie taka potrzeba możemy oczywiście dane nagrać na płytę bądź pendrive. Podobna sytuacja wygląda w przypadku danych dotyczących finansowania kampanii, które zajmują 3.9 GB.
 \bigskip
 
 Poniżej zamieszczony został skrypt SQL tworzący strukturę bazy danych:

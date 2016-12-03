@@ -21,13 +21,14 @@ angular.module('tassApp', [])
       var finDataInd = $scope.data_individual;
       var finDataComm = $scope.data_committees;
       if (selectedCand === undefined && selectedCand.cand_id === undefined) {
-            console.log("dupa");
             return;
       }
       console.log(selectedCand);
       console.log(finDataComm);
       console.log(finDataInd);
+      console.log("vec la: " + vecLayer)
       map.removeLayer(vecLayer);
+      // vecLayer = undefined;
       console.log($scope.selectedCand.cand_id);
 
       vecLayer = getVectorLayer($scope.selectedCand.cand_id, finDataInd, finDataComm);
@@ -60,7 +61,7 @@ function getVectorLayer(candId, finDataInd, finDataComm) {
           console.log("Don't know which vector data to get!");
           return;
         }
-        console.log(viewName);
+        console.log(viewName + " " + candId);
         var url =
           'http://localhost:8080/geoserver/cite/wfs?service=WFS' +
           '&version=1.1.0&request=GetFeature' +
@@ -68,11 +69,12 @@ function getVectorLayer(candId, finDataInd, finDataComm) {
           '&outputFormat=text/javascript&format_options=callback:loadFeatures' +
           '&viewparams=CAND_ID:' + candId + //'S2IL00028'
           '&srsName=EPSG:3857&bbox=' + extent.join(',');// + ',EPSG:3857';
+          // '&srsName=EPSG:4326&bbox=' + extent.join(',');// + ',EPSG:3857';
           console.log(url);
 
-          $.ajax({url: url, dataType: 'jsonp', jsonp: false})
-        },
-        strategy: ol.loadingstrategy.tile(ol.tilegrid.createXYZ({
+          $.ajax({url: url, dataType: 'jsonp', jsonp: false});
+        }
+        , strategy: ol.loadingstrategy.tile(ol.tilegrid.createXYZ({
             maxZoom: 1
         }))
   });
@@ -120,7 +122,7 @@ function getBaseMap() {
     layers: [getBaseMapLayer()],
     target: 'map',
     view: new ol.View({
-      center: [0, 0],
+      center: [-10000000, 6000000],
       zoom: 2
     }),
     controls:[
@@ -129,7 +131,7 @@ function getBaseMap() {
 }
 
 function getColor(feature) {
-  console.log("G': " + feature.G.sum);
+  // console.log("G': " + feature.G.sum);
   return feature.G.sum > 20000 ? '#800026' :
          feature.G.sum > 10000 ? '#BD0026' :
          feature.G.sum > 8000 ? '#E31A1C' :
